@@ -25,7 +25,7 @@ func NewDockPanel(id string, width Length, height Length) *DockPanel {
 	}
 }
 
-func (d *DockPanel) DockElem(elem Element, dockType DockType) {
+func (d *DockPanel) Dock(elem Element, dockType DockType) {
 	d.Append(elem)
 
 	maxX := d.ActualWidth()

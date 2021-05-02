@@ -34,6 +34,13 @@ func (c *container) Layout(g *gocui.Gui) error {
 func (c *container) Children() []Element {
 	return c.children
 }
+func (c *container) Last() Element {
+	length := len(c.children)
+	if length == 0 {
+		return nil
+	}
+	return c.children[length-1]
+}
 func (c *container) GetChild(id string) Element {
 	for _, child := range c.children {
 		if child.Id() == id {

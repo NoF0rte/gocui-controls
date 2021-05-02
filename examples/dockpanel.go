@@ -27,37 +27,37 @@ func main() {
 	g.SelFgColor = gocui.ColorGreen
 	g.SelFrameColor = gocui.ColorRed
 
-	dockPanel := ui.NewDockPanel("root", ui.Fill, ui.Fill)
+	root := ui.NewDockPanel("root", ui.Fill, ui.Fill)
 
 	centerBtn := ui.NewButton("center", ui.Auto, ui.Auto)
 	centerBtn.Label = "Center"
-	dockPanel.DockElem(centerBtn, ui.Center)
+	root.Dock(centerBtn, ui.Center)
 
 	leftBtn := ui.NewButton("left", ui.Auto, ui.Auto)
 	leftBtn.Label = "Left"
-	dockPanel.DockElem(leftBtn, ui.Left)
+	root.Dock(leftBtn, ui.Left)
 
 	rightBtn := ui.NewButton("right", ui.Auto, ui.Auto)
 	rightBtn.Label = "Right"
-	dockPanel.DockElem(rightBtn, ui.Right)
+	root.Dock(rightBtn, ui.Right)
 
 	logBox := ui.NewTextBox("log", ui.Fill, 7)
 	logBox.Options.Title = "log"
-	dockPanel.DockElem(logBox, ui.Bottom)
+	root.Dock(logBox, ui.Bottom)
 
 	titleDock := ui.NewDockPanel("titleDock", ui.Fill, 3)
-	dockPanel.DockElem(titleDock, ui.Top)
+	root.Dock(titleDock, ui.Top)
 
 	closeBtn := ui.NewButton("close", ui.Auto, ui.Auto)
 	closeBtn.Label = "X"
 
 	closeBtn.OnClick = quit
 
-	titleDock.DockElem(closeBtn, ui.Right)
+	titleDock.Dock(closeBtn, ui.Right)
 
-	g.SetManager(dockPanel)
+	g.SetManager(root)
 
-	err = dockPanel.SetKeybindings(g)
+	err = root.SetKeybindings(g)
 	if err != nil {
 		log.Panicln(err)
 	}
