@@ -80,12 +80,12 @@ func (m *Menu) isMouseClickOnItem(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyE
 	var err error
 
 	my := keyEv.MouseY - m.y
-	mx := keyEv.MouseX - m.x
+	mx := keyEv.MouseX - m.x - 1
 	if line, err = v.Line(my - 1); err != nil {
 		return false
 	}
 
-	return mx <= len(line)-1
+	return mx <= len(line)
 }
 func (m *Menu) onClick(g *gocui.Gui, v *gocui.View, ke *gocui.KeyEvent) error {
 	g.SetCurrentView(v.Name())
