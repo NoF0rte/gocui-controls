@@ -11,7 +11,7 @@ type Button struct {
 	mouseDown       bool
 	processingClick bool
 	Label           string
-	OnClick         func(g *gocui.Gui, v *gocui.View) error
+	OnClick         func(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error
 }
 
 func NewButton(id string, width Length, height Length) *Button {
@@ -25,17 +25,18 @@ func NewButton(id string, width Length, height Length) *Button {
 		element: newElement(id, width, height, options),
 	}
 	btn.AddKeybinding(&Keybinding{
-		Key: gocui.MouseLeft,
+		Key: gocui.MouseRelease,
 		Mod: gocui.ModNone,
-		Handler: func(g *gocui.Gui, v *gocui.View) error {
+		Handler: func(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
+			Logln("MouseLeft")
 			btn.mouseDown = true
 			return nil
 		},
 	})
 	btn.AddKeybinding(&Keybinding{
-		Key: gocui.MouseRelease,
+		Key: gocui.MouseLeft,
 		Mod: gocui.ModNone,
-		Handler: func(g *gocui.Gui, v *gocui.View) error {
+		Handler: func(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
 			Logfln("New View: %s", v.Name())
 			g.SetCurrentView(btn.id)
 
@@ -43,7 +44,7 @@ func NewButton(id string, width Length, height Length) *Button {
 				btn.mouseDown = false
 				if !btn.processingClick && btn.OnClick != nil {
 					btn.processingClick = true
-					err := btn.OnClick(g, v)
+					err := btn.OnClick(g, v, keyEv)
 					btn.processingClick = false
 					return err
 				}

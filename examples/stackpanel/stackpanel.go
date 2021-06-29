@@ -7,10 +7,10 @@ import (
 	ui "github.com/sm4rtshr1mp/gocui-controls"
 )
 
-func quit(g *gocui.Gui, v *gocui.View) error {
+func quit(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
 	return gocui.ErrQuit
 }
-func selectClickedView(g *gocui.Gui, v *gocui.View) error {
+func selectClickedView(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
 	_, err := g.SetCurrentView(v.Name())
 	return err
 }
@@ -31,14 +31,17 @@ func main() {
 
 	btn1 := ui.NewButton("btn1", ui.Auto, ui.Auto)
 	btn1.Label = "Button 1"
+	btn1.Options.Frame = false
 	root.Append(btn1)
 
 	btn2 := ui.NewButton("btn2", ui.Auto, ui.Auto)
 	btn2.Label = "Button 2"
+	btn2.Options.Frame = false
 	root.Append(btn2)
 
 	btn3 := ui.NewButton("btn3", ui.Auto, ui.Auto)
 	btn3.Label = "Button 3"
+	btn3.Options.Frame = false
 	root.Append(btn3)
 
 	horizontalStack := ui.NewStackPanel("horizontalStack", ui.Fill, ui.Auto, ui.Horizontal)
@@ -70,7 +73,7 @@ func main() {
 	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
 		log.Panicln(err)
 	}
-	if err := g.SetKeybinding("", gocui.MouseRelease, gocui.ModNone, selectClickedView); err != nil {
+	if err := g.SetKeybinding("", gocui.MouseLeft, gocui.ModNone, selectClickedView); err != nil {
 		log.Panicln(err)
 	}
 

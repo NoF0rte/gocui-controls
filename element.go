@@ -9,7 +9,7 @@ var gui *gocui.Gui
 type Keybinding struct {
 	Key     interface{}
 	Mod     gocui.Modifier
-	Handler func(*gocui.Gui, *gocui.View) error
+	Handler func(*gocui.Gui, *gocui.View, *gocui.KeyEvent) error
 }
 
 func NewGui(mode gocui.OutputMode, supportOverlaps bool) (*gocui.Gui, error) {

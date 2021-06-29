@@ -7,10 +7,10 @@ import (
 	ui "github.com/sm4rtshr1mp/gocui-controls"
 )
 
-func quit(g *gocui.Gui, v *gocui.View) error {
+func quit(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
 	return gocui.ErrQuit
 }
-func selectClickedView(g *gocui.Gui, v *gocui.View) error {
+func selectClickedView(g *gocui.Gui, v *gocui.View, keyEv *gocui.KeyEvent) error {
 	_, err := g.SetCurrentView(v.Name())
 	return err
 }
@@ -48,8 +48,8 @@ func main() {
 	titleDock := ui.NewDockPanel("titleDock", ui.Fill, 3)
 	root.Dock(titleDock, ui.Top)
 
-	closeBtn := ui.NewButton("close", ui.Auto, ui.Auto)
-	closeBtn.Label = "X"
+	closeBtn := ui.NewButton("close", 4, 4)
+	closeBtn.Label = "\n  "
 
 	closeBtn.OnClick = quit
 
@@ -65,7 +65,7 @@ func main() {
 	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
 		log.Panicln(err)
 	}
-	if err := g.SetKeybinding("", gocui.MouseRelease, gocui.ModNone, selectClickedView); err != nil {
+	if err := g.SetKeybinding("", gocui.MouseLeft, gocui.ModNone, selectClickedView); err != nil {
 		log.Panicln(err)
 	}
 
